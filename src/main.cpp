@@ -8,5 +8,6 @@ int main() {
     Data data("Alice", "Bob", 100);
     Block newBlock(previousHash, data);
     newBlock.printBlock();
+    newBlock.mineBlock(2);
     return 0;
 }

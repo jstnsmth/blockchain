@@ -13,6 +13,16 @@ Block::Block(const std::vector<uint8_t>& previousHash, const Data& data) {
     calculateHash();
 }
 
+std::string Block::uint8ToString(const std::vector<uint8_t>& bytes) {
+    std::string str = "";
+    for (auto byte: bytes) {
+         char buffer[3];
+         snprintf(buffer, sizeof(buffer), "%02x", byte);
+         str += buffer;
+    }
+    return str;
+}
+
 void Block::calculateHash() {
     std::stringstream ss;
 
@@ -40,6 +50,19 @@ void Block::calculateHash() {
     }
 }
 
+void Block::mineBlock(int difficulty) {
+    std::cout << "Mining Block: " << std::endl;
+    std::string target = "";
+    for (int i = 0; i < difficulty; i++) {
+        target.append("0");
+    }
+    do {
+        ++nonce;
+        calculateHash();
+        std::cout << uint8ToString(hash) << std::endl;
+    } while (uint8ToString(hash).substr(0, difficulty) != target);
+}
+
 void Block::printBlock() {
     struct tm *timeinfo = localtime(&this->timestamp);
     char buffer[80];
@@ -51,15 +74,7 @@ void Block::printBlock() {
     std::cout << "Sender: " << this->data.getSender() << std::endl;
     std::cout << "Receiver: " << this->data.getReceiver() << std::endl;
     std::cout << "Amount: " << this->data.getAmount() << std::endl;
-    std::cout << "Previous Hash: ";
-    for (auto byte : previousHash) {
-        std::cout << std::hex << static_cast<int>(byte);
-    }
-    std::cout << std::endl;
-
-    std::cout << "Hash: ";
-    for (auto byte : hash) {
-        std::cout << std::hex << static_cast<int>(byte);
-    }
-    std::cout << std::endl;
+    std::cout << "Previous Hash: " << uint8ToString(this->previousHash) << std::endl;
+    std::cout << "Hash: " << uint8ToString(this->hash) << std::endl;
+    std::string target(4, '0');
 }

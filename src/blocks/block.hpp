@@ -23,7 +23,7 @@ public:
     void printBlock();
 
 private:
-    std::string unit8ToString(const std::vector<uint8_t>& bytes);
+    std::string uint8ToString(const std::vector<uint8_t>& bytes);
 };
 
 #endif
