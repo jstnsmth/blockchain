@@ -13,14 +13,14 @@ Data::Data(std::string sender, std::string receiver, int amount) {
     this->amount = amount;
 }
 
-std::string Data::getSender() {
+std::string Data::getSender() const {
     return sender;
 }
 
-std::string Data::getReceiver() {
+std::string Data::getReceiver() const {
     return receiver;
 }
 
-int Data::getAmount() {
+int Data::getAmount() const {
     return amount;
 }
